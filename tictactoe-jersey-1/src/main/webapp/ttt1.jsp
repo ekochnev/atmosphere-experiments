@@ -3,7 +3,6 @@
     <title>Tic Tac Toe Example 1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="resources/tictactoe.css">
-    <link rel="stylesheet" type="text/css" href="resources/block-unblock.css">
 
     <script type="text/javascript" src="jquery/jquery-1.6.4.js"></script>
     <script type="text/javascript" src="jquery/jquery.form.js"></script>
