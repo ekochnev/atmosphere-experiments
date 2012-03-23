@@ -122,7 +122,7 @@
                     }
                 }
 
-                var location = baseUrl;
+                var location = baseUrl + "/get/start";
 
                 var header = {
                             "myLatitude": myLatitude.toString(),
