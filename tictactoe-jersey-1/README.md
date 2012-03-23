@@ -8,12 +8,28 @@ the AtmosphereHandler directly (since a lot of boilerplate code is needed).
 
 API is very simple and should looks like:
 
-/tictactoe/restapi/game/get/start - starting game (subscribing - create or retrieve a broadcaster, set and publish initial state of game)
+/tictactoe/restapi/game/start - starting game (subscribing - create or retrieve a broadcaster, set and publish initial state of game)
 
-/tictactoe/restapi/game/get/turn/{cell} - player move (send chosen cell)
-/tictactoe/restapi/game/post/turn/{cell}
+/tictactoe/restapi/game/turn/{cell} - player move (send chosen cell)
+/tictactoe/restapi/game/turn/{cell}
 
 Problem:
 
+When I push chosen cell by user back it doesn't work properly :(
+It calls the TicTacToeGame.startPost() if I do push by POST:
 
+connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 1,
+                        method: 'POST',
+                        url: turnUrl});
 
+and TicTacToeGame.startGet if I do push by GET:
+
+connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 0,
+                        method: 'GET',
+                        url: turnUrl});
+
+So, is it bug or restriction or do I something wrong?

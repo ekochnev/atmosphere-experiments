@@ -178,8 +178,8 @@
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 1,
-                            method: 'POST',
-                            url: turnUrl});
+                        method: 'POST',
+                        url: turnUrl});
 
                 return false;
             };
