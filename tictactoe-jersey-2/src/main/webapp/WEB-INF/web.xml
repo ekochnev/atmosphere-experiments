@@ -18,14 +18,6 @@
             <param-name>org.atmosphere.useNative</param-name>
             <param-value>true</param-value>
         </init-param>
-        <!--<init-param>-->
-            <!--<param-name>org.atmosphere.cpr.broadcastFilterClasses</param-name>-->
-            <!--<param-value>com.mygames.tictactoe.PersonalPerRequestBroadcastFilter</param-value>-->
-        <!--</init-param>-->
-        <!--<init-param>-->
-            <!--<param-name>org.atmosphere.cpr.broadcastFilterClasses</param-name>-->
-            <!--<param-value>org.atmosphere.client.JSONPTransportFilter</param-value>-->
-        <!--</init-param>-->
         <init-param>
             <param-name>org.atmosphere.cpr.sessionSupport</param-name>
             <param-value>true</param-value>
@@ -41,8 +33,4 @@
         <servlet-name>AtmosphereServlet</servlet-name>
         <url-pattern>/restapi/*</url-pattern>
     </servlet-mapping>
-
-
-
 </web-app>
-
