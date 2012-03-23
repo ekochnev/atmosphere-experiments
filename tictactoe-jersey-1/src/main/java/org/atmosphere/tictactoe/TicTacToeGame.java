@@ -41,7 +41,7 @@ public class TicTacToeGame {
     @GET
     @Suspend
     @Broadcast
-    @Path("/get/start")
+    @Path("/start")
     public Broadcastable startGet(@Context HttpHeaders headers,
                                   @Context UriInfo uriInfo,
                                   @Context SecurityContext securityContext,
@@ -63,7 +63,31 @@ public class TicTacToeGame {
     }
 
     @POST
-    @Path("/post/turn/{cell}")
+    @Suspend
+    @Broadcast
+    @Path("/start")
+    public Broadcastable startPost(@Context HttpHeaders headers,
+                                   @Context UriInfo uriInfo,
+                                   @Context SecurityContext securityContext,
+                                   @Context ServletConfig servletConfig,
+                                   @Context ServletContext servletContext,
+                                   @Context HttpServletRequest httpServletRequest,
+                                   @Context HttpServletResponse httpServletResponse
+    ) {
+        if (gameBroadcaster == null) {
+            gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+        }
+
+        int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+        game = new TTTGame(initBoard);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        return new Broadcastable(json, json, gameBroadcaster);
+    }
+
+    @POST
+    @Path("/turn/{cell}")
     @Broadcast
     public Broadcastable turnPost(@PathParam("cell") String cellStr,
                                   @Context HttpHeaders headers,
@@ -91,7 +115,7 @@ public class TicTacToeGame {
     }
 
     @GET
-    @Path("/get/turn/{cell}")
+    @Path("/turn/{cell}")
     @Broadcast
     public Broadcastable turnGet(@PathParam("cell") String cellStr,
                                  @Context HttpHeaders headers,
@@ -102,20 +126,14 @@ public class TicTacToeGame {
                                  @Context HttpServletRequest httpServletRequest,
                                  @Context HttpServletResponse httpServletResponse) {
 
-        int cell = -1;
-
-        if (cellStr == null) {
-            cellStr = "0";
-        }
-        try {
-            cell = Integer.parseInt(cellStr);
-        } catch (NumberFormatException nfe) {
-            cell = 0;
-        }
-
-        game.turn(cell);
-
-        return new Broadcastable(game, game, gameBroadcaster);
+        return turnPost(cellStr,
+                headers,
+                uriInfo,
+                securityContext,
+                servletConfig,
+                servletContext,
+                httpServletRequest,
+                httpServletResponse);
     }
 
 }

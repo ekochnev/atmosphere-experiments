@@ -122,7 +122,7 @@
                     }
                 }
 
-                var location = baseUrl + "/get/start";
+                var location = baseUrl + "/start";
 
                 var header = {
                             "myLatitude": myLatitude.toString(),
@@ -156,11 +156,13 @@
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
-                var turnUrl = baseUrl + "/post/turn/0";
+                var turnUrl = baseUrl + "/turn/0";
 
+                // use GET
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 0,
+                        method: 'GET',
                         url: turnUrl});
 
                 return false;
@@ -170,11 +172,13 @@
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
-                var turnUrl = baseUrl + "/post/turn/1";
+                var turnUrl = baseUrl + "/turn/1";
 
+                // use POST
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 1,
+                            method: 'POST',
                             url: turnUrl});
 
                 return false;
@@ -185,7 +189,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/2";
+                var turnUrl = baseUrl + "/turn/2";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 2,
@@ -199,7 +203,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/3";
+                var turnUrl = baseUrl + "/turn/3";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 3,
@@ -213,7 +217,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/4";
+                var turnUrl = baseUrl + "/turn/4";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 4,
@@ -227,7 +231,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/5";
+                var turnUrl = baseUrl + "/turn/5";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 5,
@@ -241,7 +245,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/6";
+                var turnUrl = baseUrl + "/turn/6";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 6,
@@ -255,7 +259,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/7";
+                var turnUrl = baseUrl + "/turn/7";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 7,
@@ -269,7 +273,7 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/8";
+                var turnUrl = baseUrl + "/turn/8";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 8,
