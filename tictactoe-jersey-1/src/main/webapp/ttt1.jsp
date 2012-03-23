@@ -157,7 +157,7 @@
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
-                var turnUrl = baseUrl + "/post/turn/0"
+                var turnUrl = baseUrl + "/post/turn/0";
 
                 connectedEndpoint.push(turnUrl,
                         null,
@@ -165,147 +165,125 @@
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img1').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
-                var turnUrl = baseUrl + "/post/turn/1"
+                var turnUrl = baseUrl + "/post/turn/1";
 
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 1,
-                        url: turnUrl});
+                            url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img2').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/2"
+                var turnUrl = baseUrl + "/post/turn/2";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 2,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img3').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/3"
+                var turnUrl = baseUrl + "/post/turn/3";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 3,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img4').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/4"
+                var turnUrl = baseUrl + "/post/turn/4";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 4,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img5').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/5"
+                var turnUrl = baseUrl + "/post/turn/5";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 5,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img6').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/6"
+                var turnUrl = baseUrl + "/post/turn/6";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 6,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img7').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/7"
+                var turnUrl = baseUrl + "/post/turn/7";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 7,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
             getElementById('img8').onclick = function(event) {
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/8"
+                var turnUrl = baseUrl + "/post/turn/8";
                 connectedEndpoint.push(turnUrl,
                         null,
                         $.atmosphere.request = {data: 'cell=' + 8,
                         url: turnUrl});
 
                 return false;
-            }
+            };
 
         });
     </script>
     <style type='text/css'>
         div {
             border: 0px solid black;
-        }
-
-        input#phrase {
-            width: 30em;
-            background-color: #e0f0f0;
-        }
-
-        input#topic {
-            width: 14em;
-            background-color: #e0f0f0;
-        }
-
-        div.hidden {
-            display: none;
-        }
-
-        span.from {
-            font-weight: bold;
-        }
-
-        span.alert {
-            font-style: italic;
         }
     </style>
 </head>
@@ -315,27 +293,27 @@ JSESSIONID:&nbsp;<%=request.getSession(true).getId()%>
 <div id="game">
 <table>
     <tr>
-        <td id="cell0"><img id="img0" src="resources/0.gif">
+        <td id="cell0"><img id="img0" src="resources/0.gif" alt="">
         </td>
-        <td id="cell1"><img id="img1" src="resources/0.gif">
+        <td id="cell1"><img id="img1" src="resources/0.gif" alt="">
         </td>
-        <td id="cell2"><img id="img2" src="resources/0.gif">
-        </td>
-    </tr>
-    <tr>
-        <td id="cell3"><img id="img3" src="resources/0.gif">
-        </td>
-        <td id="cell4"><img id="img4" src="resources/0.gif">
-        </td>
-        <td id="cell5"><img id="img5" src="resources/0.gif">
+        <td id="cell2"><img id="img2" src="resources/0.gif" alt="">
         </td>
     </tr>
     <tr>
-        <td id="cell6"><img id="img6" src="resources/0.gif">
+        <td id="cell3"><img id="img3" src="resources/0.gif" alt="">
         </td>
-        <td id="cell7"><img id="img7" src="resources/0.gif">
+        <td id="cell4"><img id="img4" src="resources/0.gif" alt="">
         </td>
-        <td id="cell8"><img id="img8" src="resources/0.gif">
+        <td id="cell5"><img id="img5" src="resources/0.gif" alt="">
+        </td>
+    </tr>
+    <tr>
+        <td id="cell6"><img id="img6" src="resources/0.gif" alt="">
+        </td>
+        <td id="cell7"><img id="img7" src="resources/0.gif" alt="">
+        </td>
+        <td id="cell8"><img id="img8" src="resources/0.gif" alt="">
         </td>
     </tr>
 </table>
