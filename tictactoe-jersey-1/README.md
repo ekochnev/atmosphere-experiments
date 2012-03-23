@@ -33,3 +33,5 @@ connectedEndpoint.push(turnUrl,
                         url: turnUrl});
 
 So, is it bug or restriction or do I something wrong?
+
+So I decided as workaround do ajax call separately - please see README.md in the tictactoe-jersey-2 example.
