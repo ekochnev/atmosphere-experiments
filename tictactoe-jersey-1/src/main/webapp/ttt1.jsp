@@ -1,8 +1,4 @@
 <html>
-<%--<%--%>
-    <%--HttpSession session1 = request.getSession(true);--%>
-    <%--session1.invalidate();--%>
-<%--%>--%>
 <head>
     <title>Tic Tac Toe Example 1</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,9 +14,8 @@
 
         $(document).ready(function() {
 
-            alert(document.cookie);
-            alert($.cookie("JSESSIONID"));
-
+            //alert(document.cookie);
+            //alert($.cookie("JSESSIONID"));
 
             var myLatitude = 0;
             var myLongitude = 0;
@@ -29,8 +24,6 @@
             var callbackAdded = false;
             var detectedTransport = null;
             var baseUrl = '/tictactoe/restapi/game'
-            //var turnUrl = '/tictactoe/restapi/game/post/turn'
-            //var baseUrl = '/tictactoe/'
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
@@ -48,10 +41,6 @@
             }
 
             function chImg(args) {
-                //var test1 = eval('(' + '{"win": "-1", "board": ["10","0","0","0","0","0","0","0","0"],"turn": 1 }' + ')');
-                //alert('test1: ' + test1);
-
-                //alert('args: ' + args);
 
                 if (args == null) {
                     return;
@@ -61,23 +50,16 @@
                 }
 
                 var data = eval('(' + args + ')');
-                //alert('data: ' + data);
 
                 if (data == null) {
-                    //connect();
                     return;
                 }
 
-                //alert('1');
                 for (i = 0; i < 9; i++) {
-                    //alert(i);
-                    //alert(data.board[i]);
                     // 0 is blank, 10 is x, 1 is o
                     document.getElementById("img" + i).src = "resources/" + data.board[i] + ".gif";
-                    //document.getElementById("img" + i).src = "resources/" + 10 + ".gif";
                 }
 
-                //alert('2');
                 var statusMsg;
                 // -1 is unfinished, 0 is tie, 1 is X win, 2 is Y win
                 if (data.win == 0) {
@@ -101,38 +83,6 @@
                 // And write the status message out here -
                 document.getElementById("gstatus").innerHTML = statusMsg;
 
-            }
-
-            function chState(args) {
-
-                alert('args: ' + args);
-
-                if (args == null) {
-                    return;
-                }
-                if (args == "") {
-                    return;
-                }
-
-                var data = eval('(' + args + ')');
-                //alert('data: ' + data);
-
-                if (data == null) {
-                    return;
-                }
-
-//                if (data.mark != 'GameState') {
-//                    return;
-//                }
-
-//                var turn = document.getElementById("turn").value;
-
-                if (data.turn == data.yourSide) {
-                    $("#LockPane").get(0).className = 'LockOff';
-                } else {
-                    $("#LockPane").get(0).className = 'LockOff';
-                    //alert("You are blocked. Please wait your turn. Please wait for move the player.");
-                }
             }
 
             function getKeyCode(ev) {
@@ -168,7 +118,6 @@
                         $.atmosphere.log('info', ["response.responseBody: " + response.responseBody]);
                         if (response.status == 200) {
                             var data = response.responseBody;
-                            chState(data);
                             chImg(data);
                         }
                     }
@@ -200,61 +149,39 @@
             }
 
             function connect() {
-                //alert("connect");
                 unsubscribe();
-                //alert("unsubscribe");
                 subscribe();
-                //alert("subscribe");
-
-//                connectedEndpoint.push(baseUrl,
-//                        null,
-//                        $.atmosphere.request = {data: 'action=init'});
             }
 
             getElementById('img0').onclick = function(event) {
-                //alert('img0.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
                 var turnUrl = baseUrl + "/post/turn/0"
 
-                //$.get(turnUrl, null, null);
-                $.post(turnUrl, null, null);
-
-//                connectedEndpoint.push(turnUrl,
-//                        null,
-//                        $.atmosphere.request = {data: 'cell=' + 0,
-//                        url: turnUrl});
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 0,
+                        url: turnUrl});
 
                 return false;
             }
 
             getElementById('img1').onclick = function(event) {
-                //alert('img1.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
                 var turnUrl = baseUrl + "/post/turn/1"
 
-//                connectedEndpoint.push(turnUrl,
-//                        null,
-//                        $.atmosphere.request = {data: 'cell=' + 1,
-//                        url: turnUrl});
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl,
-                    headers: {
-                        "Cookie": "JSESSIONID=" + $.cookie("JSESSIONID"),
-                        "MY_TEST_HEADER" : "MY_TEST_HEADER"
-                    }
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 1,
+                        url: turnUrl});
 
                 return false;
             }
 
             getElementById('img2').onclick = function(event) {
-                //alert('img2.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -269,7 +196,6 @@
             }
 
             getElementById('img3').onclick = function(event) {
-                //alert('img3.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -284,7 +210,6 @@
             }
 
             getElementById('img4').onclick = function(event) {
-                //alert('img4.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -299,7 +224,6 @@
             }
 
             getElementById('img5').onclick = function(event) {
-                //alert('img5.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -314,7 +238,6 @@
             }
 
             getElementById('img6').onclick = function(event) {
-                //alert('img6.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -329,7 +252,6 @@
             }
 
             getElementById('img7').onclick = function(event) {
-                //alert('img7.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -344,7 +266,6 @@
             }
 
             getElementById('img8').onclick = function(event) {
-                //alert('img8.onclick');
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
@@ -389,11 +310,8 @@
     </style>
 </head>
 <body>
-
-<%--<input id="turn" name="turn" type="hidden" value="<%=request.getAttribute("turn")%>">--%>
 JSESSIONID:&nbsp;<%=request.getSession(true).getId()%>
 <h1>Tic Tac Toe</h1>
-<%--<div id="game" style="display: block; display: none;">--%>
 <div id="game">
 <table>
     <tr>
@@ -423,6 +341,5 @@ JSESSIONID:&nbsp;<%=request.getSession(true).getId()%>
 </table>
 </div>
 <h2 id="gstatus">Starting to watch the game.</h2>
-<div id="LockPane" class="LockOff"></div>
 </body>
 </html>
