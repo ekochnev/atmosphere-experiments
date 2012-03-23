@@ -23,7 +23,7 @@
             var connectedEndpoint;
             var callbackAdded = false;
             var detectedTransport = null;
-            var baseUrl = '/tictactoe/restapi/game'
+            var baseUrl = '/tictactoe/restapi/game';
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
