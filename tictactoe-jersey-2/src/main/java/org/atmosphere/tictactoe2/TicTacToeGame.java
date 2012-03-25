@@ -1,4 +1,4 @@
-package org.atmosphere.tictactoe;
+package org.atmosphere.tictactoe2;
 
 import com.google.gson.Gson;
 import com.sun.jersey.spi.container.servlet.PerSession;

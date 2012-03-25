@@ -1,4 +1,4 @@
-package org.atmosphere.tictactoe;
+package org.atmosphere.tictactoe0;
 
 import com.sun.jersey.spi.container.servlet.PerSession;
 import org.atmosphere.annotation.Broadcast;

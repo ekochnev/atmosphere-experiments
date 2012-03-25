@@ -1,5 +1,5 @@
 
-package org.atmosphere.tictactoe;
+package org.atmosphere.tictactoe2;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,8 +14,7 @@ public class TTTGame {
     public int[][] wins = {{0, 1, 2}, {3, 4, 5,}, {6, 7, 8}, {0, 3, 6},
             {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
     public int winner = -1;
-    private int yourSide = 0;
-    public String filter = "";
+    public int yourSide = 0;
 
     public TTTGame() {
 
@@ -78,13 +77,5 @@ public class TTTGame {
 
     private int[] getBoard() {
         return board;
-    }
-
-    public int getYourSide() {
-        return yourSide;
-    }
-
-    public void setYourSide(int yourSide) {
-        this.yourSide = yourSide;
     }
 }

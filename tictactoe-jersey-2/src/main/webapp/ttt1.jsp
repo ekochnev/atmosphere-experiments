@@ -122,7 +122,7 @@
                     }
                 }
 
-                var location = baseUrl + "/get/start";
+                var location = baseUrl + "/start";
 
                 var header = {
                             "myLatitude": myLatitude.toString(),
@@ -156,12 +156,14 @@
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
-                var turnUrl = baseUrl + "/post/turn/0";
+                var turnUrl = baseUrl + "/turn/0";
 
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 0,
-                        url: turnUrl});
+                // use GET
+                $.ajax({
+                    async: true,
+                    type: 'GET',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -170,12 +172,14 @@
                 if (detectedTransport == null) {
                     detectedTransport = 'websocket';
                 }
-                var turnUrl = baseUrl + "/post/turn/1";
+                var turnUrl = baseUrl + "/turn/1";
 
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 1,
-                            url: turnUrl});
+                // use POST
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -185,11 +189,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/2";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 2,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/2";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -199,11 +204,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/3";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 3,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/3";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -213,11 +219,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/4";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 4,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/4";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -227,11 +234,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/5";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 5,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/5";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -241,11 +249,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/6";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 6,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/6";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -255,11 +264,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/7";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 7,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/7";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
@@ -269,11 +279,12 @@
                     detectedTransport = 'websocket';
                 }
 
-                var turnUrl = baseUrl + "/post/turn/8";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 8,
-                        url: turnUrl});
+                var turnUrl = baseUrl + "/turn/8";
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url: turnUrl
+                });
 
                 return false;
             };
