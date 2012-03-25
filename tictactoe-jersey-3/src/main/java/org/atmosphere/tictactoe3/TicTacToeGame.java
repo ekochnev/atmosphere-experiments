@@ -1,6 +1,5 @@
 package org.atmosphere.tictactoe3;
 
-import com.google.gson.Gson;
 import com.sun.jersey.spi.container.servlet.PerSession;
 import org.atmosphere.annotation.Broadcast;
 import org.atmosphere.annotation.Suspend;
@@ -57,9 +56,7 @@ public class TicTacToeGame {
         int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
         game = new TTTGame(initBoard);
 
-        Gson gson = new Gson();
-        String json = gson.toJson(game);
-        return new Broadcastable(json, json, gameBroadcaster);
+        return new Broadcastable(game, gameBroadcaster);
     }
 
     @POST
@@ -74,13 +71,14 @@ public class TicTacToeGame {
                                    @Context HttpServletRequest httpServletRequest,
                                    @Context HttpServletResponse httpServletResponse
     ) {
-        return startGet(headers,
-                                  uriInfo,
-                                  securityContext,
-                                  servletConfig,
-                                  servletContext,
-                                  httpServletRequest,
-                                  httpServletResponse);
+        if (gameBroadcaster == null) {
+            gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+        }
+
+        int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
+        game = new TTTGame(initBoard);
+
+        return new Broadcastable(game, gameBroadcaster);
     }
 
     @POST
@@ -108,7 +106,7 @@ public class TicTacToeGame {
 
         game.turn(cell);
 
-        return new Broadcastable(game, game, gameBroadcaster);
+        return new Broadcastable(game, gameBroadcaster);
     }
 
     @GET

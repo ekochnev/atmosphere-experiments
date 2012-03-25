@@ -159,11 +159,11 @@
                 var turnUrl = baseUrl + "/turn/0";
 
                 // use GET
-                $.ajax({
-                    async: true,
-                    type: 'GET',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 0,
+                        method: 'GET',
+                        url: turnUrl});
 
                 return false;
             };
@@ -175,11 +175,11 @@
                 var turnUrl = baseUrl + "/turn/1";
 
                 // use POST
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 1,
+                        method: 'POST',
+                        url: turnUrl});
 
                 return false;
             };
@@ -190,11 +190,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/2";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 2,
+                        url: turnUrl});
 
                 return false;
             };
@@ -205,11 +204,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/3";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 3,
+                        url: turnUrl});
 
                 return false;
             };
@@ -220,11 +218,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/4";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 4,
+                        url: turnUrl});
 
                 return false;
             };
@@ -235,11 +232,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/5";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 5,
+                        url: turnUrl});
 
                 return false;
             };
@@ -250,11 +246,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/6";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 6,
+                        url: turnUrl});
 
                 return false;
             };
@@ -265,11 +260,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/7";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 7,
+                        url: turnUrl});
 
                 return false;
             };
@@ -280,11 +274,10 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/8";
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url: turnUrl
-                });
+                connectedEndpoint.push(turnUrl,
+                        null,
+                        $.atmosphere.request = {data: 'cell=' + 8,
+                        url: turnUrl});
 
                 return false;
             };

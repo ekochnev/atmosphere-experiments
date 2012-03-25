@@ -108,7 +108,9 @@ public class TicTacToeGame {
 
         game.turn(cell);
 
-        return new Broadcastable(game, game, gameBroadcaster);
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        return new Broadcastable(json, json, gameBroadcaster);
     }
 
     @GET
