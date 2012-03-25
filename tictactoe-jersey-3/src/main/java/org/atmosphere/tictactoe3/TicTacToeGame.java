@@ -39,7 +39,7 @@ public class TicTacToeGame {
 
     @GET
     @Suspend
-    @Broadcast
+    //@Broadcast
     @Path("/start")
     public Broadcastable startGet(@Context HttpHeaders headers,
                                   @Context UriInfo uriInfo,
@@ -61,7 +61,7 @@ public class TicTacToeGame {
 
     @POST
     @Suspend
-    @Broadcast
+    //@Broadcast
     @Path("/start")
     public Broadcastable startPost(@Context HttpHeaders headers,
                                    @Context UriInfo uriInfo,
@@ -83,7 +83,7 @@ public class TicTacToeGame {
 
     @POST
     @Path("/turn/{cell}")
-    @Broadcast
+    //@Broadcast
     public Broadcastable turnPost(@PathParam("cell") String cellStr,
                                   @Context HttpHeaders headers,
                                   @Context UriInfo uriInfo,
@@ -111,7 +111,7 @@ public class TicTacToeGame {
 
     @GET
     @Path("/turn/{cell}")
-    @Broadcast
+    //@Broadcast
     public Broadcastable turnGet(@PathParam("cell") String cellStr,
                                  @Context HttpHeaders headers,
                                  @Context UriInfo uriInfo,

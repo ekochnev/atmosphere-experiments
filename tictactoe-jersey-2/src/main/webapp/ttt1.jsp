@@ -14,7 +14,7 @@
         $(document).ready(function() {
 
             //alert(document.cookie);
-            //alert($.cookie("JSESSIONID"));
+            alert("JSESSIONID=" + $.cookie("JSESSIONID"));
 
             var myLatitude = 0;
             var myLongitude = 0;
@@ -47,6 +47,8 @@
                 if (args == "") {
                     return;
                 }
+
+                //alert(args);
 
                 var data = eval('(' + args + ')');
 

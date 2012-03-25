@@ -41,6 +41,8 @@
 
             function chImg(args) {
 
+                alert(args);
+
                 if (args == null) {
                     return;
                 }
