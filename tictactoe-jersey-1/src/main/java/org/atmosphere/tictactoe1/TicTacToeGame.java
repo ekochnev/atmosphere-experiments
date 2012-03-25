@@ -19,7 +19,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
-@Produces("application/json")
+@Produces("text/html;charset=ISO-8859-1")
 @PerSession
 @Path("/game")
 public class TicTacToeGame {
