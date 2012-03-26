@@ -6,5 +6,5 @@ and don't do transformation to json by yourself then
 Jersey will do it fo us.
 
 So, the questions:
-1. Is it bug?
-2. Can we use JSON support powered by Jersey?
+1. Is it bug/feature?
+2. Can we use JSON support powered by Jersey with Atmosphere framework?
