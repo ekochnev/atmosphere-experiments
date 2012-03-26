@@ -26,6 +26,10 @@
             <param-name>org.atmosphere.cpr.AtmosphereHandler.contextRoot</param-name>
             <param-value>/restapi/*</param-value>
         </init-param>
+        <init-param>
+            <param-name>org.atmosphere.cpr.broadcastFilterClasses</param-name>
+            <param-value>org.atmosphere.tictactoe4.PersonalPerRequestBroadcastFilter</param-value>
+        </init-param>
 
         <load-on-startup>0</load-on-startup>
     </servlet>
