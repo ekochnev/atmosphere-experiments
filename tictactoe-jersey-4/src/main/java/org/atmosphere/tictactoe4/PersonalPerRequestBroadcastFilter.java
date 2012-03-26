@@ -14,13 +14,12 @@ public class PersonalPerRequestBroadcastFilter implements PerRequestBroadcastFil
     public BroadcastAction filter(HttpServletRequest request, HttpServletResponse response, Object message) {
 
         logger.info("PersonalPerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
-
         return new BroadcastAction(message);
     }
 
     public BroadcastAction filter(Object originalMessage, Object message) {
-        logger.info("PersonalPerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
 
+        logger.info("PersonalPerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
         return new BroadcastAction(message);
     }
 }

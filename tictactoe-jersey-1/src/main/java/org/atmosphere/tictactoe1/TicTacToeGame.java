@@ -74,13 +74,12 @@ public class TicTacToeGame {
                                    @Context HttpServletRequest httpServletRequest,
                                    @Context HttpServletResponse httpServletResponse
     ) {
-        return startGet(headers,
-                                  uriInfo,
-                                  securityContext,
-                                  servletConfig,
-                                  servletContext,
-                                  httpServletRequest,
-                                  httpServletResponse);
+        int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
+        game = new TTTGame(initBoard);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        return new Broadcastable(json, json, gameBroadcaster);
     }
 
     @POST
