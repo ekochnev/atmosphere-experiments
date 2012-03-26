@@ -81,7 +81,7 @@ public class TicTacToeGame {
 
         Gson gson = new Gson();
         String json = gson.toJson(game);
-        return new Broadcastable(json, json, gameBroadcaster);
+        return new Broadcastable(json, gameBroadcaster);
     }
 
     @POST
@@ -102,7 +102,7 @@ public class TicTacToeGame {
 
         Gson gson = new Gson();
         String json = gson.toJson(game);
-        return new Broadcastable(json, json, gameBroadcaster);
+        return new Broadcastable(json, gameBroadcaster);
     }
 
     @POST
@@ -132,7 +132,7 @@ public class TicTacToeGame {
 
         Gson gson = new Gson();
         String json = gson.toJson(game);
-        return new Broadcastable(json, json, gameBroadcaster);
+        return new Broadcastable(json, gameBroadcaster);
     }
 
     @GET
