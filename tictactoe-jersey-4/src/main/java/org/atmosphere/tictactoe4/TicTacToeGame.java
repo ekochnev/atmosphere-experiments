@@ -1,4 +1,4 @@
-package org.atmosphere.tictactoe1;
+package org.atmosphere.tictactoe4;
 
 import com.google.gson.Gson;
 import com.sun.jersey.spi.container.servlet.PerSession;
@@ -7,7 +7,9 @@ import org.atmosphere.annotation.Suspend;
 import org.atmosphere.cpr.Broadcaster;
 import org.atmosphere.cpr.BroadcasterFactory;
 import org.atmosphere.cpr.DefaultBroadcaster;
+import org.atmosphere.cpr.PerRequestBroadcastFilter;
 import org.atmosphere.jersey.Broadcastable;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
+import java.util.logging.Logger;
 
 @Produces("text/html;charset=ISO-8859-1")
 @PerSession
@@ -52,6 +55,25 @@ public class TicTacToeGame {
     ) {
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+
+            gameBroadcaster.getBroadcasterConfig().addFilter(new PerRequestBroadcastFilter() {
+
+                private final org.slf4j.Logger logger = LoggerFactory.getLogger(TicTacToeGame.this.getClass());
+
+                @Override
+                public BroadcastAction filter(HttpServletRequest request, HttpServletResponse response, Object message) {
+                    logger.info("PerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
+
+                    return new BroadcastAction(message);
+                }
+
+                @Override
+                public BroadcastAction filter(Object originalMessage, Object message) {
+                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
+
+                    return new BroadcastAction(message);
+                }
+            });
         }
 
         int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
