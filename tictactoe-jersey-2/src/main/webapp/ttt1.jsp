@@ -131,13 +131,13 @@
                             "myLongitude": myLongitude.toString()
                             };
 
-                $.atmosphere.subscribe(location, !callbackAdded ? callback : null,
+                connectedEndpoint = $.atmosphere.subscribe(location, !callbackAdded ? callback : null,
                         $.atmosphere.request = {
                             attachHeadersAsQueryString : true,
                             transport: 'websocket',
                             headers: header
                         });
-                connectedEndpoint = $.atmosphere.response;
+                //connectedEndpoint = $.atmosphere.response;
                 callbackAdded = true;
             }
 
