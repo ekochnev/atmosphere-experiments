@@ -159,11 +159,13 @@
                 var turnUrl = baseUrl + "/turn/0";
 
                 // use GET
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 0,
-                        method: 'GET',
-                        url: turnUrl});
+//                connectedEndpoint.push(turnUrl,
+//                        null,
+//                        $.atmosphere.request = {data: 'cell=' + 0,
+//                        method: 'GET',
+//                        url: turnUrl});
+
+                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl});
 
                 return false;
             };
