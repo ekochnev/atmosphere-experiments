@@ -1,5 +1,5 @@
 
-package org.atmosphere.tictactoe4;
+package org.atmosphere.tictactoe42a9x;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

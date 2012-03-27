@@ -1,14 +1,12 @@
-package org.atmosphere.tictactoe4;
+package org.atmosphere.tictactoe42a9x;
 
 import com.google.gson.Gson;
 import com.sun.jersey.spi.container.servlet.PerSession;
 import org.atmosphere.annotation.Broadcast;
 import org.atmosphere.annotation.Suspend;
-import org.atmosphere.cpr.Broadcaster;
-import org.atmosphere.cpr.BroadcasterFactory;
-import org.atmosphere.cpr.DefaultBroadcaster;
-import org.atmosphere.cpr.PerRequestBroadcastFilter;
+import org.atmosphere.cpr.*;
 import org.atmosphere.jersey.Broadcastable;
+import org.atmosphere.jersey.SuspendResponse;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
@@ -42,17 +40,18 @@ public class TicTacToeGame {
     }
 
     @GET
-    @Suspend
-    @Broadcast
     @Path("/start")
-    public Broadcastable startGet(@Context HttpHeaders headers,
+    public SuspendResponse<String> startGet(@Context HttpHeaders headers,
                                   @Context UriInfo uriInfo,
                                   @Context SecurityContext securityContext,
                                   @Context ServletConfig servletConfig,
                                   @Context ServletContext servletContext,
                                   @Context HttpServletRequest httpServletRequest,
-                                  @Context HttpServletResponse httpServletResponse
-    ) {
+                                  @Context HttpServletResponse httpServletResponse) {
+
+        int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+        game = new TTTGame(initBoard);
+
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
 
@@ -61,28 +60,97 @@ public class TicTacToeGame {
                 private final org.slf4j.Logger logger = LoggerFactory.getLogger(TicTacToeGame.this.getClass());
 
                 @Override
-                public BroadcastAction filter(HttpServletRequest request, HttpServletResponse response, Object message) {
-                    logger.info("PerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
+                public BroadcastAction filter(AtmosphereResource atmosphereResource, Object originalMessage, Object message) {
 
+                    logger.info("PerRequestBroadcastFilter.filter(AtmosphereResource atmosphereResource, Object originalMessage, Object message)");
                     return new BroadcastAction(message);
                 }
 
                 @Override
                 public BroadcastAction filter(Object originalMessage, Object message) {
-                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
-
+                    logger.info("PerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
                     return new BroadcastAction(message);
                 }
             });
         }
 
-        int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
-        game = new TTTGame(initBoard);
+        return new SuspendResponse.SuspendResponseBuilder<String>()
+                .broadcaster(gameBroadcaster)
+                .outputComments(true)
+                .addListener(new AtmosphereResourceEventListener() {
 
-        Gson gson = new Gson();
-        String json = gson.toJson(game);
-        return new Broadcastable(json, gameBroadcaster);
+                    @Override
+                    public void onSuspend(AtmosphereResourceEvent event) {
+                        Gson gson = new Gson();
+                        String json = gson.toJson(game);
+                        gameBroadcaster.broadcast(json);
+                    }
+
+                    @Override
+                    public void onResume(AtmosphereResourceEvent event) {
+                        return;
+                    }
+
+                    @Override
+                    public void onDisconnect(AtmosphereResourceEvent event) {
+                        return;
+                    }
+
+                    @Override
+                    public void onBroadcast(AtmosphereResourceEvent event) {
+                        return;
+                    }
+
+                    @Override
+                    public void onThrowable(AtmosphereResourceEvent event) {
+                        return;
+                    }
+                })
+                .build();
     }
+
+//    @GET
+//    @Suspend
+//    @Broadcast
+//    @Path("/start")
+//    public Broadcastable startGet(@Context HttpHeaders headers,
+//                                  @Context UriInfo uriInfo,
+//                                  @Context SecurityContext securityContext,
+//                                  @Context ServletConfig servletConfig,
+//                                  @Context ServletContext servletContext,
+//                                  @Context HttpServletRequest httpServletRequest,
+//                                  @Context HttpServletResponse httpServletResponse
+//    ) {
+//        if (gameBroadcaster == null) {
+//            gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+//
+//            gameBroadcaster.getBroadcasterConfig().addFilter(new PerRequestBroadcastFilter() {
+//
+//                private final org.slf4j.Logger logger = LoggerFactory.getLogger(TicTacToeGame.this.getClass());
+//
+//                @Override
+//                public BroadcastAction filter(HttpServletRequest request, HttpServletResponse response, Object message) {
+//                    logger.info("PerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
+//
+//                    return new BroadcastAction(message);
+//                }
+//
+//                @Override
+//                public BroadcastAction filter(Object originalMessage, Object message) {
+//                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
+//
+//                    return new BroadcastAction(message);
+//                }
+//            });
+//        }
+//
+//        int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
+//        game = new TTTGame(initBoard);
+//
+//        Gson gson = new Gson();
+//        String json = gson.toJson(game);
+//        return new Broadcastable(json, gameBroadcaster);
+//    }
 
     @POST
     @Suspend
