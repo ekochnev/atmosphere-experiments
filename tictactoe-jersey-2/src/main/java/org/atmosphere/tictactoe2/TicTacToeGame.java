@@ -8,6 +8,8 @@ import org.atmosphere.cpr.Broadcaster;
 import org.atmosphere.cpr.BroadcasterFactory;
 import org.atmosphere.cpr.DefaultBroadcaster;
 import org.atmosphere.jersey.Broadcastable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -24,6 +26,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("/game")
 public class TicTacToeGame {
 
+    private static final Logger logger = LoggerFactory.getLogger(TicTacToeGame.class);
 
     private Broadcaster gameBroadcaster;
     private TTTGame game;
@@ -35,6 +38,8 @@ public class TicTacToeGame {
                          @Context ServletContext servletContext,
                          @Context HttpServletRequest httpServletRequest,
                          @Context HttpServletResponse httpServletResponse) {
+        logger.info("Constructor of TicTacToeGame is called.");
+
         return;
     }
 
@@ -50,6 +55,9 @@ public class TicTacToeGame {
                                   @Context HttpServletRequest httpServletRequest,
                                   @Context HttpServletResponse httpServletResponse
     ) {
+
+        logger.info("TicTacToeGame.startGet() method is called.");
+
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
         }
@@ -74,13 +82,15 @@ public class TicTacToeGame {
                                    @Context HttpServletRequest httpServletRequest,
                                    @Context HttpServletResponse httpServletResponse
     ) {
-        return startGet(headers,
-                                  uriInfo,
-                                  securityContext,
-                                  servletConfig,
-                                  servletContext,
-                                  httpServletRequest,
-                                  httpServletResponse);
+
+        logger.info("TicTacToeGame.startPost() method is called.");
+
+        int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
+        game = new TTTGame(initBoard);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        return new Broadcastable(json, json, gameBroadcaster);
     }
 
     @POST
@@ -94,6 +104,8 @@ public class TicTacToeGame {
                                   @Context ServletContext servletContext,
                                   @Context HttpServletRequest httpServletRequest,
                                   @Context HttpServletResponse httpServletResponse) {
+
+        logger.info("TicTacToeGame.turnPost() method is called.");
 
         int cell = -1;
 
@@ -125,14 +137,24 @@ public class TicTacToeGame {
                                  @Context HttpServletRequest httpServletRequest,
                                  @Context HttpServletResponse httpServletResponse) {
 
-        return turnPost(cellStr,
-                headers,
-                uriInfo,
-                securityContext,
-                servletConfig,
-                servletContext,
-                httpServletRequest,
-                httpServletResponse);
+        logger.info("TicTacToeGame.turnGet() method is called.");
+
+        int cell = -1;
+
+        if (cellStr == null) {
+            cellStr = "0";
+        }
+        try {
+            cell = Integer.parseInt(cellStr);
+        } catch (NumberFormatException nfe) {
+            cell = 0;
+        }
+
+        game.turn(cell);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        return new Broadcastable(json, json, gameBroadcaster);
     }
 
 }
