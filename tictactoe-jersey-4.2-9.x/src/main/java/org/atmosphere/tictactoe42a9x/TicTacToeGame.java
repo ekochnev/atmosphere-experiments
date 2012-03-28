@@ -29,7 +29,7 @@ public class TicTacToeGame {
 
     private Broadcaster gameBroadcaster;
     private static Broadcaster globalGameBroadcaster = null;
-    private TTTGame game;
+    private static TTTGame game = new TTTGame();
 
     public TicTacToeGame(@Context HttpHeaders headers,
                          @Context UriInfo uriInfo,
