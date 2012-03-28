@@ -38,6 +38,9 @@ public class TicTacToeGame {
                          @Context HttpServletRequest httpServletRequest,
                          @Context HttpServletResponse httpServletResponse,
                          @Context AtmosphereResource atmosphereResource) {
+
+        logger.info("Constructor of TicTacToeGame is called.");
+
         return;
     }
 
@@ -45,7 +48,7 @@ public class TicTacToeGame {
     @Suspend
     @Broadcast
     @Path("/start1")
-    public Broadcastable startGet(@Context HttpHeaders headers,
+    public Broadcastable startGet1(@Context HttpHeaders headers,
                                   @Context UriInfo uriInfo,
                                   @Context SecurityContext securityContext,
                                   @Context ServletConfig servletConfig,
@@ -53,6 +56,9 @@ public class TicTacToeGame {
                                   @Context HttpServletRequest httpServletRequest,
                                   @Context HttpServletResponse httpServletResponse
     ) {
+
+        logger.info("TicTacToeGame.startGet1() method is called.");
+
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
 
@@ -95,6 +101,9 @@ public class TicTacToeGame {
                                   @Context HttpServletRequest httpServletRequest,
                                   @Context HttpServletResponse httpServletResponse
     ) {
+
+        logger.info("TicTacToeGame.startGet2() method is called.");
+
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
 
@@ -136,6 +145,8 @@ public class TicTacToeGame {
                                             @Context HttpServletRequest httpServletRequest,
                                             @Context HttpServletResponse httpServletResponse,
                                             @Context AtmosphereResource atmosphereResource) {
+
+        logger.info("TicTacToeGame.startGet3() method is called.");
 
         int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
         game = new TTTGame(initBoard);
@@ -209,6 +220,8 @@ public class TicTacToeGame {
                             @Context HttpServletResponse httpServletResponse,
                             @Context AtmosphereResource atmosphereResource) {
 
+        logger.info("TicTacToeGame.startGet4() method is called.");
+
         int[] initBoard = {0, 0, 0, 0, 1, 0, 0, 0, 0};
         game = new TTTGame(initBoard);
 
@@ -280,6 +293,8 @@ public class TicTacToeGame {
                                    @Context AtmosphereResource atmosphereResource
     ) {
 
+        logger.info("TicTacToeGame.startPost1() method is called.");
+
         int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
         game = new TTTGame(initBoard);
 
@@ -301,6 +316,8 @@ public class TicTacToeGame {
                                    @Context HttpServletResponse httpServletResponse,
                                    @Context AtmosphereResource atmosphereResource
     ) {
+
+        logger.info("TicTacToeGame.startPost2() method is called.");
 
         int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
         game = new TTTGame(initBoard);
@@ -324,6 +341,8 @@ public class TicTacToeGame {
                                    @Context AtmosphereResource atmosphereResource
     ) {
 
+        logger.info("TicTacToeGame.startPost3() method is called.");
+
         int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
         game = new TTTGame(initBoard);
 
@@ -346,6 +365,8 @@ public class TicTacToeGame {
                                    @Context AtmosphereResource atmosphereResource
     ) {
 
+        logger.info("TicTacToeGame.startPost4() method is called.");
+
         int[] initBoard = {0, 0, 0, 1, 1, 1, 0, 0, 0};
         game = new TTTGame(initBoard);
 
@@ -366,6 +387,8 @@ public class TicTacToeGame {
                                   @Context HttpServletRequest httpServletRequest,
                                   @Context HttpServletResponse httpServletResponse,
                                   @Context AtmosphereResource atmosphereResource) {
+
+        logger.info("TicTacToeGame.turnPost() method is called.");
 
         int cell = -1;
 
@@ -397,6 +420,8 @@ public class TicTacToeGame {
                                  @Context HttpServletRequest httpServletRequest,
                                  @Context HttpServletResponse httpServletResponse,
                                  @Context AtmosphereResource atmosphereResource) {
+
+        logger.info("TicTacToeGame.turnGet() method is called.");
 
         int cell = -1;
 

@@ -122,7 +122,7 @@
                     }
                 }
 
-                var location = baseUrl + "/start1";
+                var location = baseUrl + "/start3";
 
                 var header = {
                             "myLatitude": myLatitude.toString(),
