@@ -254,6 +254,8 @@ public class TicTacToeGame {
             });
         }
 
+        gameBroadcaster.addAtmosphereResource(atmosphereResource);
+
         atmosphereResource.addEventListener(new AtmosphereResourceEventListener() {
 
             @Override
