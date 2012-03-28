@@ -28,6 +28,7 @@ public class TicTacToeGame {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(TicTacToeGame.class);
 
     private Broadcaster gameBroadcaster;
+    private static Broadcaster globalGameBroadcaster = null;
     private TTTGame game;
 
     public TicTacToeGame(@Context HttpHeaders headers,
@@ -60,7 +61,8 @@ public class TicTacToeGame {
         logger.info("TicTacToeGame.startGet1() method is called.");
 
         if (gameBroadcaster == null) {
-            gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+            gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, Math.random(), true);
+            globalGameBroadcaster = gameBroadcaster;
 
             gameBroadcaster.getBroadcasterConfig().addFilter(new PerRequestBroadcastFilter() {
 
@@ -106,6 +108,7 @@ public class TicTacToeGame {
 
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+            globalGameBroadcaster = gameBroadcaster;
 
             gameBroadcaster.getBroadcasterConfig().addFilter(new PerRequestBroadcastFilter() {
 
@@ -153,6 +156,7 @@ public class TicTacToeGame {
 
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+            globalGameBroadcaster = gameBroadcaster;
 
             gameBroadcaster.getBroadcasterConfig().addFilter(new PerRequestBroadcastFilter() {
 
@@ -228,6 +232,7 @@ public class TicTacToeGame {
 
         if (gameBroadcaster == null) {
             gameBroadcaster = BroadcasterFactory.getDefault().lookup(DefaultBroadcaster.class, "game", true);
+            globalGameBroadcaster = gameBroadcaster;
 
             gameBroadcaster.getBroadcasterConfig().addFilter(new PerRequestBroadcastFilter() {
 
@@ -407,6 +412,11 @@ public class TicTacToeGame {
 
         Gson gson = new Gson();
         String json = gson.toJson(game);
+        if (gameBroadcaster == null) {
+            logger.error("TicTacToeGame.turnPost(): Session doesn't have broadcaster :(.");
+            return new Broadcastable(json, globalGameBroadcaster);
+        }
+
         return new Broadcastable(json, gameBroadcaster);
     }
 
@@ -440,6 +450,10 @@ public class TicTacToeGame {
 
         Gson gson = new Gson();
         String json = gson.toJson(game);
+        if (gameBroadcaster == null) {
+            logger.error("TicTacToeGame.turnGet(): Session doesn't have broadcaster :(.");
+            return new Broadcastable(json, globalGameBroadcaster);
+        }
         return new Broadcastable(json, gameBroadcaster);
     }
 
