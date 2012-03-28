@@ -75,8 +75,8 @@ public class TicTacToeGame {
 
                 @Override
                 public BroadcastAction filter(Object originalMessage, Object message) {
-                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
 
+                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
                     return new BroadcastAction(message);
                 }
             });
@@ -120,8 +120,8 @@ public class TicTacToeGame {
 
                 @Override
                 public BroadcastAction filter(Object originalMessage, Object message) {
-                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
 
+                    logger.info("PerRequestBroadcastFilter.filter(Object originalMessage, Object message)");
                     return new BroadcastAction(message);
                 }
             });
@@ -167,6 +167,7 @@ public class TicTacToeGame {
 
                 @Override
                 public BroadcastAction filter(Object originalMessage, Object message) {
+
                     logger.info("PerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
                     return new BroadcastAction(message);
                 }
@@ -241,6 +242,7 @@ public class TicTacToeGame {
 
                 @Override
                 public BroadcastAction filter(Object originalMessage, Object message) {
+
                     logger.info("PerRequestBroadcastFilter.filter(HttpServletRequest request, HttpServletResponse response, Object message)");
                     return new BroadcastAction(message);
                 }
