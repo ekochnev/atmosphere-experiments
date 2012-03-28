@@ -5,6 +5,6 @@
     <title>Tic Tac Toe Samples</title>
 </head>
 <body>
-<p> First example: <a href="ttt1.jsp">Simple Comet long poll</a>
+<p> First example: <a href="ttt1.jsp">Simple Comet long poll</a></p>
 </body>
 </html>
