@@ -22,7 +22,9 @@
             var connectedEndpoint;
             var callbackAdded = false;
             var detectedTransport = null;
-            var baseUrl = '/tictactoe/restapi/game';
+            //var baseUrl = '/tictactoe/restapi/game';
+            var baseUrl = document.location.toString() + '/restapi/game';
+            alert(baseUrl);
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
@@ -159,11 +161,7 @@
                 var turnUrl = baseUrl + "/turn/0";
 
                 // use GET
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 0,
-                        method: 'GET',
-                        url: turnUrl});
+                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl, webSocketUrl: turnUrl});
 
                 return false;
             };
