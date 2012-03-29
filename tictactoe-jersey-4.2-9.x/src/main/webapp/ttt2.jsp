@@ -23,8 +23,31 @@
             var callbackAdded = false;
             var detectedTransport = null;
             //var baseUrl = '/tictactoe/restapi/game';
-            var baseUrl = document.location.toString() + '/restapi/game';
+            var baseUrl = 'http://localhost:8080/tictactoe/restapi/game';
             alert(baseUrl);
+
+//            alert(  "   document.location: " + document.location +
+//                    //" \ndocument.location.toSource(): " + document.location.toSource() +
+//                    " \ndocument.location.uri: " + document.location.uri +
+//                    " \ndocument.location.url: " + document.location.url +
+//                    " \ndocument.location.protocol: " + document.location.protocol +
+//                    " \ndocument.location.host: " + document.location.host +
+//                    " \ndocument.location.pathname: " + document.location.pathname +
+//                    " \ndocument.URL: " + document.URL +
+//                    " \ndocument.documentURI:" + document.documentURI +
+//                    " \ndocument.baseURI:" + document.baseURI +
+//
+//                    " \nwindow.location: " + window.location +
+//                    //" \nwindow.location.toSource(): " + window.location.toSource() +
+//                    " \nwindow.location.uri: " + window.location.uri +
+//                    " \nwindow.location.url: " + window.location.url +
+//                    " \nwindow.location.protocol: " + window.location.protocol +
+//                    " \nwindow.location.host: " + window.location.host +
+//                    " \nwindow.location.pathname: " + window.location.pathname
+////                    " \nwindow.URL: " + window.URL +
+////                    " \nwindow.documentURI:" + window.documentURI +
+////                    " \nwindow.baseURI:" + window.baseURI
+//            );
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
@@ -188,10 +211,7 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/2";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 2,
-                        url: turnUrl});
+                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl, webSocketUrl : turnUrl});
 
                 return false;
             };

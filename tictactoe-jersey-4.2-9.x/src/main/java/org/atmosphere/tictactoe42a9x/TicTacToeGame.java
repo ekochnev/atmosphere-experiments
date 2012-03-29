@@ -103,7 +103,6 @@ public class TicTacToeGame {
                                   @Context HttpServletRequest httpServletRequest,
                                   @Context HttpServletResponse httpServletResponse
     ) {
-
         logger.info("TicTacToeGame.startGet2() method is called.");
 
         if (gameBroadcaster == null) {
