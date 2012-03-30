@@ -1,0 +1,4 @@
+&lt;init-param&gt;
+            &lt;param-name&gt;org.atmosphere.websocket.WebSocketProtocol&lt/param-name&gt;
+            &lt;param-value&gt;org.atmosphere.tictactoe42a9x.JerseyWebSocketProtocol&lt/param-value&gt;
+&lt;/init-param&gt;

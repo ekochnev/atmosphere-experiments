@@ -21,7 +21,10 @@
 
             var connectedEndpoint;
             var callbackAdded = false;
-            var detectedTransport = null;
+
+            var preferableTransport = 'websocket'; /* websocket, jsonp, long-polling, polling, streaming */
+            var detectedTransport = preferableTransport;
+
             //var baseUrl = '/tictactoe/restapi/game';
             var baseUrl = 'http://localhost:8080/tictactoe/restapi/game';
             alert(baseUrl);
@@ -118,15 +121,6 @@
                 return document.getElementById(arguments[0]);
             }
 
-            function getTransport(t) {
-                transport = t.options[t.selectedIndex].value;
-                if (transport == 'autodetect') {
-                    transport = 'websocket';
-                }
-
-                return false;
-            }
-
             function subscribe() {
                 // jquery.atmosphere.response
                 function callback(response) {
@@ -157,7 +151,7 @@
                 connectedEndpoint = $.atmosphere.subscribe(location, !callbackAdded ? callback : null,
                         $.atmosphere.request = {
                             attachHeadersAsQueryString : true,
-                            transport: 'websocket',
+                            transport: detectedTransport, /* websocket, jsonp, long-polling, polling, streaming */
                             headers: header
                         });
                 //connectedEndpoint = $.atmosphere.response;
@@ -179,7 +173,7 @@
 
             getElementById('img0').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
                 var turnUrl = baseUrl + "/turn/0";
 
@@ -191,7 +185,7 @@
 
             getElementById('img1').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
                 var turnUrl = baseUrl + "/turn/1";
 
@@ -207,7 +201,7 @@
 
             getElementById('img2').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/2";
@@ -218,21 +212,18 @@
 
             getElementById('img3').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/3";
-                connectedEndpoint.push(turnUrl,
-                        null,
-                        $.atmosphere.request = {data: 'cell=' + 3,
-                        url: turnUrl});
+                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl, transport: detectedTransport});
 
                 return false;
             };
 
             getElementById('img4').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/4";
@@ -246,7 +237,7 @@
 
             getElementById('img5').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/5";
@@ -260,7 +251,7 @@
 
             getElementById('img6').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/6";
@@ -274,7 +265,7 @@
 
             getElementById('img7').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/7";
@@ -288,14 +279,13 @@
 
             getElementById('img8').onclick = function(event) {
                 if (detectedTransport == null) {
-                    detectedTransport = 'websocket';
+                    detectedTransport = preferableTransport;
                 }
 
                 var turnUrl = baseUrl + "/turn/8";
                 connectedEndpoint.push(turnUrl,
                         null,
-                        $.atmosphere.request = {data: 'cell=' + 8,
-                        url: turnUrl});
+                        $.atmosphere.request = {data: 'cell=' + 8});
 
                 return false;
             };
