@@ -29,6 +29,11 @@ jQuery.http = function() {
             return this;
         },
 
+        Url: function(url) {
+            jQuery.http.url = url;
+            return this;
+        },
+
         addHeader: function(name, value) {
 
             jQuery.http.headers[name] = value;
