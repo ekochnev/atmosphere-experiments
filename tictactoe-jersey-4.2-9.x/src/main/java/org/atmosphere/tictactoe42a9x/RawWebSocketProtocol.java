@@ -1,6 +1,5 @@
 package org.atmosphere.tictactoe42a9x;
 
-import org.apache.http.Header;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestFactory;
@@ -31,9 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable {
+public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(JerseyWebSocketProtocol.class);
+    private static final Logger logger = LoggerFactory.getLogger(RawWebSocketProtocol.class);
 
     private String contentType;
     private String methodType;
