@@ -1152,24 +1152,7 @@ jQuery.atmosphere = function() {
                         _request = $.extend(_request, message);
                     }
 
-                    if (_request.webSocketMethod != null) {
-                        data = _request.webSocketPathDelimiter +
-                            +  'webSocketMethod=' +
-                            + _request.webSocketMethod
-                            + _request.webSocketPathDelimiter
-                            + "data=" + msg;
-                    }
-
-                    //alert(_request.webSocketUrl);
-                    if (_request.webSocketUrl != null) {
-                        data = _request.webSocketPathDelimiter +
-                            +  'webSocketUrl=' +
-                            + _request.webSocketUrl
-                            + _request.webSocketPathDelimiter
-                            + "data=" + msg;
-                    } else {
-                        data = "data=" + msg;
-                    }
+                    data = msg;
 
                     _websocket.send(data);
 

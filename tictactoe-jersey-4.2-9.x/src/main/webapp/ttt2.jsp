@@ -8,6 +8,7 @@
     <script type="text/javascript" src="jquery/jquery.form.js"></script>
     <script type="text/javascript" src="jquery/jquery.atmosphere.js"></script>
     <script type="text/javascript" src="jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="jquery/jquery.http.js"></script>
 
     <script type="text/javascript">
 
@@ -177,9 +178,16 @@
                 }
                 var turnUrl = baseUrl + "/turn/0";
 
+                var rawHttpRequest = $.http.GET()
+                    .Host(window.location.host)
+                    .Url(turnUrl)
+                    .addHeader('Accept', 'text/plain')
+                    .addHeader('Accept-Charset', 'utf-8')
+                    .addHeader('Cache-Control', 'no-cache').RAW();
+
                 // use GET
                 //connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl});
-                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'POST', url: turnUrl, webSocketUrl : turnUrl});
+                connectedEndpoint.push($.atmosphere.request = {data: rawHttpRequest, method: 'POST', url: turnUrl, webSocketUrl : turnUrl});
 
                 return false;
             };

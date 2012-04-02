@@ -8,12 +8,13 @@ jQuery.http = function() {
         version : 0.1,
 
         url : "",
+        host : "",
         method: 'POST',
         headers : {},
         attributes : {},
         parameters : {},
         cookies : {},
-        body : "",
+        body : null,
 
 //        HttpRequestBuilder : function(options) {
 //
@@ -31,6 +32,11 @@ jQuery.http = function() {
 
         Url: function(url) {
             jQuery.http.url = url;
+            return this;
+        },
+
+        Host: function(host) {
+            jQuery.http.host = host;
             return this;
         },
 
@@ -105,13 +111,13 @@ jQuery.http = function() {
             var nbsp = " ";
             var LF = "\n";
             var CR = "\r";
-            var CRLF = "\n\r";
+            var CRLF = "\r\n";
             var EL = " "; // empty line
 
-            rawHttpRequest = rawHttpRequest + jQuery.http.method
+            rawHttpRequest = rawHttpRequest + jQuery.http.method + nbsp
                 + jQuery.http.url + nbsp
                 + "HTTP/1.1" + LF
-                + "Host:" + nbsp + jQuery.http.url + LF;
+                + "Host:" + nbsp + jQuery.http.host + LF;
 
             jQuery.each(jQuery.http.headers, function(index, value) {
                 rawHttpRequest = rawHttpRequest + index + ":" + nbsp + value + LF;
@@ -128,10 +134,12 @@ jQuery.http = function() {
             jQuery.each(jQuery.http.cookies, function(index, value) {
                 rawHttpRequest = rawHttpRequest + index + ":" + nbsp + value + LF;
             });
+            rawHttpRequest = rawHttpRequest + CRLF;
 
-            rawHttpRequest = rawHttpRequest + EL
-                + jQuery.http.body
-                ;
+            if (jQuery.http.body != null) {
+                rawHttpRequest = rawHttpRequest + EL
+                    + jQuery.http.body + EL;
+            }
 
             return rawHttpRequest;
         },
