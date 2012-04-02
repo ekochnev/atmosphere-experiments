@@ -9,10 +9,10 @@ jQuery.http = function() {
 
         url : "",
         method: 'POST',
-        headers : [],
-        attributes : [],
-        parameters : [],
-        cookies : [],
+        headers : {},
+        attributes : {},
+        parameters : {},
+        cookies : {},
         body : "",
 
 //        HttpRequestBuilder : function(options) {
@@ -36,7 +36,8 @@ jQuery.http = function() {
 
         addHeader: function(name, value) {
 
-            jQuery.http.headers[name] = value;
+            jQuery.http.headers[name.toString()] = value;
+            alert(jQuery.http.headers);
             return this;
         },
 
@@ -83,6 +84,21 @@ jQuery.http = function() {
             return this;
         },
 
+        Accept: function(value) {
+            jQuery.http.headers['Accept'] = value;
+            return this;
+        },
+
+        AcceptCharset: function(value) {
+            jQuery.http.headers['Accept-Charset'] = value;
+            return this;
+        },
+
+        AcceptEncoding: function(value) {
+            jQuery.http.headers['Accept-Encoding'] = value;
+            return this;
+        },
+
         RAW : function() {
 
             var rawHttpRequest = "";
@@ -93,10 +109,9 @@ jQuery.http = function() {
             var EL = " "; // empty line
 
             rawHttpRequest = rawHttpRequest + jQuery.http.method
-                + rawHttpRequest + jQuery.http.method + nbsp
-                + rawHttpRequest + jQuery.http.url + nbsp
-                + rawHttpRequest + "HTTP/1.1" + LF
-                + rawHttpRequest + "Host:" + nbsp + host + LF;
+                + jQuery.http.url + nbsp
+                + "HTTP/1.1" + LF
+                + "Host:" + nbsp + jQuery.http.url + LF;
 
             jQuery.each(jQuery.http.headers, function(index, value) {
                 rawHttpRequest = rawHttpRequest + index + ":" + nbsp + value + LF;
@@ -115,7 +130,7 @@ jQuery.http = function() {
             });
 
             rawHttpRequest = rawHttpRequest + EL
-                + rawHttpRequest + jQuery.http.body
+                + jQuery.http.body
                 ;
 
             return rawHttpRequest;

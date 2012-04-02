@@ -14,7 +14,7 @@
 
         $(document).ready(function() {
 
-            var rawHttpRequest = $.http.GET
+            var rawHttpRequest = $.http.GET()
                     .Url(document.location)
                     .addHeader('Accept', 'text/plain')
                     .addHeader('Accept-Charset', 'utf-8')
