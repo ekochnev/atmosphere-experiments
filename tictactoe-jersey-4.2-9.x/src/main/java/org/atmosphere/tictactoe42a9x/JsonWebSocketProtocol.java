@@ -1,16 +1,6 @@
 package org.atmosphere.tictactoe42a9x;
 
 import com.google.gson.Gson;
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestFactory;
-import org.apache.http.impl.DefaultHttpRequestFactory;
-import org.apache.http.impl.nio.codecs.DefaultHttpRequestParser;
-import org.apache.http.impl.nio.reactor.SessionInputBufferImpl;
-import org.apache.http.nio.NHttpMessageParser;
-import org.apache.http.nio.reactor.SessionInputBuffer;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.atmosphere.cpr.*;
 import org.atmosphere.websocket.WebSocket;
 import org.atmosphere.websocket.WebSocketProcessor;
@@ -20,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -81,6 +70,7 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
 
         Gson gson = new Gson();
         JsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, JsonHttpServletRequest.class);
+        String body = jsonHttpServletRequest.getBody();
 
         AtmosphereResourceImpl resource = (AtmosphereResourceImpl) webSocket.resource();
         if (resource == null) {
@@ -95,6 +85,15 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
 
         // Propagate the original attribute to WebSocket message.
         attributesMap.putAll(initialRequest.attributes());
+        attributesMap.putAll(jsonHttpServletRequest.getAttributes());
+
+        Map<String, String> headersMap  = new HashMap<String, String>();
+        headersMap.putAll(jsonHttpServletRequest.getHeaders());
+
+        Map<String, String[]> queryStrings = new HashMap<String, String[]>();
+        for (String key : jsonHttpServletRequest.getParameters().keySet()) {
+            queryStrings.put(key, new String[]{jsonHttpServletRequest.getParameters().get(key)});
+        }
 
         // ######################
         String pathInfo = initialRequest.getPathInfo();
@@ -113,8 +112,10 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
                 .pathInfo(pathInfo)
 
                 .attributes(attributesMap)
+                .headers(headersMap)
+                .queryStrings(queryStrings)
 
-                .body(d)
+                .body(body)
                 .destroyable(destroyable)
                 .build();
 
