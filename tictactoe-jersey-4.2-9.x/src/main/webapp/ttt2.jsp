@@ -214,7 +214,16 @@
                 }
 
                 var turnUrl = baseUrl + "/turn/2";
-                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl, webSocketUrl : turnUrl});
+
+                var jsonHttpRequest = $.http.GET()
+                    .Host(window.location.host)
+                    .Url(turnUrl)
+                    .addHeader('Accept', 'text/plain')
+                    .addHeader('Accept-Charset', 'utf-8')
+                    .addHeader('Cache-Control', 'no-cache').JSON();
+
+                alert(jsonHttpRequest);
+                //connectedEndpoint.push($.atmosphere.request = {data: jsonHttpRequest, method: 'GET', url: turnUrl, webSocketUrl : turnUrl});
 
                 return false;
             };

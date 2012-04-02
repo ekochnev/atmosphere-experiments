@@ -43,7 +43,7 @@ jQuery.http = function() {
         addHeader: function(name, value) {
 
             jQuery.http.headers[name.toString()] = value;
-            alert(jQuery.http.headers);
+            //alert(jQuery.http.headers);
             return this;
         },
 
@@ -145,7 +145,7 @@ jQuery.http = function() {
         },
 
         JSON : function() {
-            return this;
+            return this.toString();
         }
 
 

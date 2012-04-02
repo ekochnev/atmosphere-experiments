@@ -1,5 +1,6 @@
 package org.atmosphere.tictactoe42a9x;
 
+import org.apache.http.Header;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestFactory;
@@ -76,17 +77,15 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
     @Override
     public List<AtmosphereRequest> onMessage(WebSocket webSocket, String d) {
 
-        HttpParams params = new BasicHttpParams();
-        SessionInputBuffer inbuf = new SessionInputBufferImpl(1024, 128, params);
-        HttpRequestFactory requestFactory = new DefaultHttpRequestFactory();
-        NHttpMessageParser<HttpRequest> requestParser = new DefaultHttpRequestParser(inbuf, null, requestFactory, params);
-
-         HttpRequest request = null;
-
+        // ######################
+        HttpRequest request = null;
         try {
+            HttpParams params = new BasicHttpParams();
+            SessionInputBuffer inbuf = new SessionInputBufferImpl(1024, 128, params);
+            HttpRequestFactory requestFactory = new DefaultHttpRequestFactory();
+            NHttpMessageParser<HttpRequest> requestParser = new DefaultHttpRequestParser(inbuf, null, requestFactory, params);
             requestParser.fillBuffer(newChannel(d, "UTF-8"));
             request = requestParser.parse();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (HttpException e) {
@@ -98,54 +97,48 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
             logger.error("Invalid state. No AtmosphereResource has been suspended");
             return null;
         }
-        String pathInfo = resource.getRequest().getPathInfo();
-        if (d.startsWith(delimiter)) {
-            String[] tokens = d.split(delimiter);
-
-            Map<String, String> pairMap = new HashMap<String, String>();
-            for (String token : tokens) {
-                String[] pair = token.split("=");
-
-                String key = pair[1];
-                String value = pair[2];
-
-                pairMap.put(key, value);
-            }
-
-            if (pairMap.get("webSocketUrl") != null){
-                pathInfo = pairMap.get("webSocketUrl");
-            }
-            if (pairMap.get("webSocketMethod") != null){
-                methodType = pairMap.get("webSocketMethod");
-            }
-            d = pairMap.get("data");
-        }
-
-        Map<String,Object> m = new HashMap<String, Object>();
-        m.put(FrameworkConfig.WEBSOCKET_SUBPROTOCOL, FrameworkConfig.SIMPLE_HTTP_OVER_WEBSOCKET);
-        // Propagate the original attribute to WebSocket message.
-        m.putAll(resource.getRequest().attributes());
-
-        List<AtmosphereRequest> list = new ArrayList<AtmosphereRequest>();
-
         AtmosphereRequest initialRequest = resource.getRequest();
 
+        // ######################
+        Map<String,Object> attributesMap = new HashMap<String, Object>();
+        attributesMap.put(FrameworkConfig.WEBSOCKET_SUBPROTOCOL, FrameworkConfig.SIMPLE_HTTP_OVER_WEBSOCKET);
+
+        // Propagate the original attribute to WebSocket message.
+        attributesMap.putAll(initialRequest.attributes());
+
+        // ######################
+        Map<String, String> headersMap = new HashMap<String, String>();
+        headersMap.putAll(initialRequest.headersMap());
+        for (Header header : request.getAllHeaders()) {
+            headersMap.put(header.getName(), header.getValue());
+        }
+
+        // ######################
+        String pathInfo = initialRequest.getPathInfo();
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
         String requestURI = pathInfoUri.getPath();
 
+        // ######################
         // We need to create a new AtmosphereRequest as WebSocket message may arrive concurrently on the same connection.
-        list.add(new AtmosphereRequest.Builder()
+        AtmosphereRequest atmosphereRequest = new AtmosphereRequest.Builder()
                 .request(initialRequest)
+
                 .method(methodType)
                 .contentType(contentType)
-                .body(d)
-                .attributes(m)
-                .pathInfo(pathInfo)
                 .requestURI(requestURI)
+                .pathInfo(pathInfo)
+
+                .attributes(attributesMap)
+                .headers(headersMap)
+                .queryStrings()
+
+                .body(d)
                 .destroyable(destroyable)
-                .headers(resource.getRequest().headersMap())
-                .build());
+                .build();
+
+        List<AtmosphereRequest> list = new ArrayList<AtmosphereRequest>();
+        list.add(atmosphereRequest);
 
         return list;
     }
