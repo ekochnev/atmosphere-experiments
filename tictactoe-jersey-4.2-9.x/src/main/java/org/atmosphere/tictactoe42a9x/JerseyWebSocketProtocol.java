@@ -107,13 +107,6 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
         attributesMap.putAll(initialRequest.attributes());
 
         // ######################
-        Map<String, String> headersMap = new HashMap<String, String>();
-        headersMap.putAll(initialRequest.headersMap());
-        for (Header header : request.getAllHeaders()) {
-            headersMap.put(header.getName(), header.getValue());
-        }
-
-        // ######################
         String pathInfo = initialRequest.getPathInfo();
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
@@ -122,7 +115,7 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
         // ######################
         // We need to create a new AtmosphereRequest as WebSocket message may arrive concurrently on the same connection.
         AtmosphereRequest atmosphereRequest = new AtmosphereRequest.Builder()
-                .request(initialRequest)
+                .request(new HttpServletRequestWrapper(initialRequest, request))
 
                 .method(methodType)
                 .contentType(contentType)
@@ -130,8 +123,6 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
                 .pathInfo(pathInfo)
 
                 .attributes(attributesMap)
-                .headers(headersMap)
-                .queryStrings()
 
                 .body(d)
                 .destroyable(destroyable)
