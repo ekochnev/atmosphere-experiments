@@ -178,7 +178,8 @@
                 var turnUrl = baseUrl + "/turn/0";
 
                 // use GET
-                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl});
+                //connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl});
+                connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'POST', url: turnUrl, webSocketUrl : turnUrl});
 
                 return false;
             };

@@ -70,6 +70,7 @@ jQuery.atmosphere = function() {
                 webSocketImpl: null,
                 webSocketUrl: null,
                 webSocketPathDelimiter: "@@",
+                webSocketMethod : "GET",
                 enableXDR : false,
                 rewriteURL : false,
                 attachHeadersAsQueryString : false,
@@ -1151,14 +1152,23 @@ jQuery.atmosphere = function() {
                         _request = $.extend(_request, message);
                     }
 
-                    alert(_request.webSocketUrl);
+                    if (_request.webSocketMethod != null) {
+                        data = _request.webSocketPathDelimiter +
+                            +  'webSocketMethod=' +
+                            + _request.webSocketMethod
+                            + _request.webSocketPathDelimiter
+                            + "data=" + msg;
+                    }
+
+                    //alert(_request.webSocketUrl);
                     if (_request.webSocketUrl != null) {
-                        data = _request.webSocketPathDelimiter
+                        data = _request.webSocketPathDelimiter +
+                            +  'webSocketUrl=' +
                             + _request.webSocketUrl
                             + _request.webSocketPathDelimiter
-                            + msg;
+                            + "data=" + msg;
                     } else {
-                        data = msg;
+                        data = "data=" + msg;
                     }
 
                     _websocket.send(data);

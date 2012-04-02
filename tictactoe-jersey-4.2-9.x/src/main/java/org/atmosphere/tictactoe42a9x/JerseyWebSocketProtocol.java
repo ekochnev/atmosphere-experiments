@@ -1,6 +1,15 @@
 package org.atmosphere.tictactoe42a9x;
 
-import com.sun.jersey.api.uri.UriComponent;
+import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestFactory;
+import org.apache.http.impl.DefaultHttpRequestFactory;
+import org.apache.http.impl.nio.codecs.DefaultHttpRequestParser;
+import org.apache.http.impl.nio.reactor.SessionInputBufferImpl;
+import org.apache.http.nio.NHttpMessageParser;
+import org.apache.http.nio.reactor.SessionInputBuffer;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.atmosphere.cpr.*;
 import org.atmosphere.websocket.WebSocket;
 import org.atmosphere.websocket.WebSocketProcessor;
@@ -9,8 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.UriBuilder;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +75,24 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
      */
     @Override
     public List<AtmosphereRequest> onMessage(WebSocket webSocket, String d) {
+
+        HttpParams params = new BasicHttpParams();
+        SessionInputBuffer inbuf = new SessionInputBufferImpl(1024, 128, params);
+        HttpRequestFactory requestFactory = new DefaultHttpRequestFactory();
+        NHttpMessageParser<HttpRequest> requestParser = new DefaultHttpRequestParser(inbuf, null, requestFactory, params);
+
+         HttpRequest request = null;
+
+        try {
+            requestParser.fillBuffer(newChannel(d, "UTF-8"));
+            request = requestParser.parse();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (HttpException e) {
+            throw new RuntimeException(e);
+        }
+
         AtmosphereResourceImpl resource = (AtmosphereResourceImpl) webSocket.resource();
         if (resource == null) {
             logger.error("Invalid state. No AtmosphereResource has been suspended");
@@ -68,10 +100,27 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
         }
         String pathInfo = resource.getRequest().getPathInfo();
         if (d.startsWith(delimiter)) {
-            String[] token = d.split(delimiter);
-            pathInfo = token[1];
-            d = token[2];
+            String[] tokens = d.split(delimiter);
+
+            Map<String, String> pairMap = new HashMap<String, String>();
+            for (String token : tokens) {
+                String[] pair = token.split("=");
+
+                String key = pair[1];
+                String value = pair[2];
+
+                pairMap.put(key, value);
+            }
+
+            if (pairMap.get("webSocketUrl") != null){
+                pathInfo = pairMap.get("webSocketUrl");
+            }
+            if (pairMap.get("webSocketMethod") != null){
+                methodType = pairMap.get("webSocketMethod");
+            }
+            d = pairMap.get("data");
         }
+
         Map<String,Object> m = new HashMap<String, Object>();
         m.put(FrameworkConfig.WEBSOCKET_SUBPROTOCOL, FrameworkConfig.SIMPLE_HTTP_OVER_WEBSOCKET);
         // Propagate the original attribute to WebSocket message.
@@ -80,23 +129,6 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
         List<AtmosphereRequest> list = new ArrayList<AtmosphereRequest>();
 
         AtmosphereRequest initialRequest = resource.getRequest();
-
-        String initialServletPath = initialRequest.getServletPath();
-        String initialRequestURI = initialRequest.getRequestURI();
-        String initialContextPath = initialRequest.getContextPath();
-
-//        UriBuilder absoluteUriBuilder = UriBuilder.fromUri(
-//                requestURL.toString());
-//
-//        final String decodedBasePath = (pathInfo != null)
-//                ? initialContextPath + initialServletPath + "/"
-//                : initialContextPath + "/";
-//
-//        final String encodedBasePath = UriComponent.encode(decodedBasePath,
-//                UriComponent.Type.PATH);
-//
-//        final URI baseUri = absoluteUriBuilder.replacePath(encodedBasePath).
-//                build();
 
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
@@ -171,5 +203,10 @@ public class JerseyWebSocketProtocol implements WebSocketProtocol, Serializable 
     public byte[] handleResponse(AtmosphereResponse res, byte[] message, int offset, int length) {
         // Should never be called
         return message;
+    }
+
+    private static ReadableByteChannel newChannel(final String s, final String charset)
+            throws UnsupportedEncodingException {
+        return Channels.newChannel(new ByteArrayInputStream(s.getBytes(charset)));
     }
 }
