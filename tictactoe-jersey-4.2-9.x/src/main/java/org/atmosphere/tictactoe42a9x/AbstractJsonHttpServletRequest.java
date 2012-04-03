@@ -3,12 +3,11 @@ package org.atmosphere.tictactoe42a9x;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JsonHttpServletRequest {
+public abstract class AbstractJsonHttpServletRequest {
 
     private String url;
     private String host;
     private String method;
-    private String body;
 
     private Map<String, String> attributes = new HashMap<String, String>();
     private Map<String, String> headers = new HashMap<String, String>();
@@ -39,12 +38,16 @@ public class JsonHttpServletRequest {
         this.method = method;
     }
 
-    public String getBody() {
-        return body;
+    public abstract Object getBody();
+
+    public abstract void setBody(Object body);
+
+    public void setAttribute(String name, String value) {
+        attributes.put(name, value);
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public String getAttribute(String name) {
+        return attributes.get(name);
     }
 
     public Map<String, String> getAttributes() {
@@ -55,12 +58,28 @@ public class JsonHttpServletRequest {
         this.attributes = attributes;
     }
 
+    public void setHeader(String name, String value) {
+        headers.put(name, value);
+    }
+
+    public String getHeader(String name) {
+        return headers.get(name);
+    }
+
     public Map<String, String> getHeaders() {
         return headers;
     }
 
     public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
+    }
+
+    public void setParameter(String name, String value) {
+        parameters.put(name, value);
+    }
+
+    public String getParameter(String name) {
+        return parameters.get(name);
     }
 
     public Map<String, String> getParameters() {
@@ -71,6 +90,14 @@ public class JsonHttpServletRequest {
         this.parameters = parameters;
     }
 
+    public void setCookie(String name, String value) {
+        cookies.put(name, value);
+    }
+
+    public String getCookie(String name) {
+        return cookies.get(name);
+    }
+
     public Map<String, String> getCookies() {
         return cookies;
     }
@@ -78,4 +105,6 @@ public class JsonHttpServletRequest {
     public void setCookies(Map<String, String> cookies) {
         this.cookies = cookies;
     }
+
+
 }
