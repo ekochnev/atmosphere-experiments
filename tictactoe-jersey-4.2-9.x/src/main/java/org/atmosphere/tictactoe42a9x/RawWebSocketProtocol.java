@@ -106,10 +106,15 @@ public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
         attributesMap.putAll(initialRequest.attributes());
 
         // ######################
-        String pathInfo = initialRequest.getPathInfo();
+        String pathInfo = request.getRequestLine().getUri();
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
         String requestURI = pathInfoUri.getPath();
+
+        methodType = request.getRequestLine().getMethod();
+        contentType = request.getFirstHeader(HttpHeaders.CONTENT_TYPE) != null ?
+                request.getFirstHeader(HttpHeaders.CONTENT_TYPE).getValue() :
+                initialRequest.getContentType();
 
         // ######################
         // We need to create a new AtmosphereRequest as WebSocket message may arrive concurrently on the same connection.
@@ -123,7 +128,7 @@ public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
 
                 .attributes(attributesMap)
 
-                .body(d)
+                .body(d) // TODO Unfortunately org.apache.http doesn't allow to take a body need to find workaround
                 .destroyable(destroyable)
                 .build();
 
