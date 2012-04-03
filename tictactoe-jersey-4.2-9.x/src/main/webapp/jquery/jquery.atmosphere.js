@@ -1148,9 +1148,9 @@ jQuery.atmosphere = function() {
             	var data;
                 try {
 
-                    if (typeof(message) == 'object') {
-                        _request = $.extend(_request, message);
-                    }
+//                    if (typeof(message) == 'object') {
+//                        _request = $.extend(_request, message);
+//                    }
 
                     data = msg;
 

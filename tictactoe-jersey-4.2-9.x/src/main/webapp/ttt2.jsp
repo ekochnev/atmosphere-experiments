@@ -215,15 +215,19 @@
 
                 var turnUrl = baseUrl + "/turn/2";
 
+                var cell = { cell : 2};
+
                 var jsonHttpRequest = $.http.GET()
                     .Host(window.location.host)
                     .Url(turnUrl)
                     .addHeader('Accept', 'text/plain')
                     .addHeader('Accept-Charset', 'utf-8')
-                    .addHeader('Cache-Control', 'no-cache').JSON();
+                    .addHeader('Cache-Control', 'no-cache')
+                    //.addBody("cell=2").JSON();
+                    .addBody(cell).JSON();
 
-                alert(jsonHttpRequest);
-                //connectedEndpoint.push($.atmosphere.request = {data: jsonHttpRequest, method: 'GET', url: turnUrl, webSocketUrl : turnUrl});
+                //alert(jsonHttpRequest);
+                connectedEndpoint.push($.atmosphere.request = {data: jsonHttpRequest, method: 'GET', url: turnUrl, webSocketUrl : turnUrl});
 
                 return false;
             };

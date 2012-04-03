@@ -16,10 +16,6 @@ jQuery.http = function() {
         cookies : {},
         body : null,
 
-//        HttpRequestBuilder : function(options) {
-//
-//        },
-
         GET: function() {
             jQuery.http.method = 'GET';
             return this;
@@ -140,12 +136,13 @@ jQuery.http = function() {
                 rawHttpRequest = rawHttpRequest + EL
                     + jQuery.http.body + EL;
             }
+            rawHttpRequest = rawHttpRequest + CRLF;
 
             return rawHttpRequest;
         },
 
         JSON : function() {
-            return this.toString();
+            return jQuery.stringifyJSON(this);
         }
 
 

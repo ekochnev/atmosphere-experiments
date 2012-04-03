@@ -19,7 +19,7 @@ public class BaseJsonHttpServletRequest extends AbstractJsonHttpServletRequest {
 
 //    @Override
     public void setBody(String body) {
-        this.body = (String) body;
+        this.body = body;
     }
 
 }

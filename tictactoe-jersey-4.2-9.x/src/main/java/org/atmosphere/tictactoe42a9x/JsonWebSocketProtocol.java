@@ -69,8 +69,8 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
         // ######################
 
         Gson gson = new Gson();
-        BaseJsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, BaseJsonHttpServletRequest.class);
-        String body = jsonHttpServletRequest.getBody();
+        CellJsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, CellJsonHttpServletRequest.class);
+        Cell body = jsonHttpServletRequest.getBody();
 
         AtmosphereResourceImpl resource = (AtmosphereResourceImpl) webSocket.resource();
         if (resource == null) {
@@ -120,7 +120,7 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
                 .headers(headersMap)
                 .queryStrings(queryStrings)
 
-                .body(body)
+                .body(gson.toJson(body))
                 .destroyable(destroyable)
                 .build();
 

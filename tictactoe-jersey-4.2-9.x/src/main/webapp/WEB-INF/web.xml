@@ -32,7 +32,8 @@
         </init-param>
         <init-param>
             <param-name>org.atmosphere.websocket.WebSocketProtocol</param-name>
-            <param-value>org.atmosphere.tictactoe42a9x.JerseyWebSocketProtocol</param-value>
+            <!--<param-value>org.atmosphere.tictactoe42a9x.RawWebSocketProtocol</param-value>-->
+            <param-value>org.atmosphere.tictactoe42a9x.JsonWebSocketProtocol</param-value>
         </init-param>
 
         <load-on-startup>0</load-on-startup>
