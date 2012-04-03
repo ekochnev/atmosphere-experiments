@@ -69,7 +69,7 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
         // ######################
 
         Gson gson = new Gson();
-        JsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, JsonHttpServletRequest.class);
+        BaseJsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, BaseJsonHttpServletRequest.class);
         String body = jsonHttpServletRequest.getBody();
 
         AtmosphereResourceImpl resource = (AtmosphereResourceImpl) webSocket.resource();
@@ -96,10 +96,15 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
         }
 
         // ######################
-        String pathInfo = initialRequest.getPathInfo();
+        String pathInfo = jsonHttpServletRequest.getUrl();
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
         String requestURI = pathInfoUri.getPath();
+
+        methodType = jsonHttpServletRequest.getMethod();
+        contentType = jsonHttpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE) != null ?
+                jsonHttpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE) :
+                initialRequest.getContentType();
 
         // ######################
         // We need to create a new AtmosphereRequest as WebSocket message may arrive concurrently on the same connection.

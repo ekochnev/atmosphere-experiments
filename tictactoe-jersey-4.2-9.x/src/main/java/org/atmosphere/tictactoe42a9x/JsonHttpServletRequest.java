@@ -3,11 +3,12 @@ package org.atmosphere.tictactoe42a9x;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractJsonHttpServletRequest {
+public class JsonHttpServletRequest<T> {
 
     private String url;
     private String host;
     private String method;
+    private T body;
 
     private Map<String, String> attributes = new HashMap<String, String>();
     private Map<String, String> headers = new HashMap<String, String>();
@@ -38,9 +39,13 @@ public abstract class AbstractJsonHttpServletRequest {
         this.method = method;
     }
 
-//    public abstract Object getBody();
-//
-//    public abstract void setBody(Object body);
+    public T getBody() {
+        return body;
+    }
+
+    public void setBody(T body) {
+        this.body = body;
+    }
 
     public void setAttribute(String name, String value) {
         attributes.put(name, value);
@@ -105,4 +110,6 @@ public abstract class AbstractJsonHttpServletRequest {
     public void setCookies(Map<String, String> cookies) {
         this.cookies = cookies;
     }
+
+
 }

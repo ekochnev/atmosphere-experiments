@@ -1,25 +1,23 @@
-
 package org.atmosphere.tictactoe42a9x;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Jeny
  * Date: 03.04.12
- * Time: 10:49
+ * Time: 11:10
  * To change this template use File | Settings | File Templates.
  */
-public class BaseJsonHttpServletRequest extends AbstractJsonHttpServletRequest {
+public class CellJsonHttpServletRequest extends AbstractJsonHttpServletRequest {
 
-    private String body;
+    private Cell body;
 
 //    @Override
-    public String getBody() {
+    public Cell getBody() {
         return body;
     }
 
 //    @Override
-    public void setBody(String body) {
-        this.body = (String) body;
+    public void setBody(Cell body) {
+        this.body = body;
     }
-
 }
